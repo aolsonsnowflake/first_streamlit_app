@@ -25,7 +25,7 @@ streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
 # put json into pandas dataframe
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi', key = "sl_fruit_choice")
 streamlit.write('The user entered ', fruit_choice)
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
@@ -40,6 +40,6 @@ streamlit.text("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
 
 # add fruit to fruit_load_list
-add_to_fruit_load_list = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write("Let's add this fruit to the list:", add_to_fruit_load_list)
+add_to_fruit_load_list = streamlit.text_input('What fruit would you like add to the list?','Kiwi', key = "sl_add_to_fruit_load_list")
+streamlit.write("Added this fruit to list:", add_to_fruit_load_list)
 my_cur.execute("INSERT INTO table (FRUIT_NAME) VALUES (%s)", add_to_fruit_load_list)
