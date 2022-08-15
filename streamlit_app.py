@@ -51,12 +51,15 @@ my_cur.execute("SELECT * from fruit_load_list")
 my_data_row = my_cur.fetchall()
 streamlit.text("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
+my_cnx.close()
 
 # add fruit to fruit_load_list
 add_to_fruit_load_list = streamlit.text_input('What fruit would you like add to the list?','Type fruit name here', key = "sl_add_to_fruit_load_list")
 
 if streamlit.button('Add'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
   my_cur.execute("INSERT INTO FRUIT_LOAD_LIST (FRUIT_NAME) VALUES (%s)", add_to_fruit_load_list)
   streamlit.write("Added this fruit to list:", add_to_fruit_load_list)
+  my_cnx.close()
 
   
